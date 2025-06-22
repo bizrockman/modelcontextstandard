@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  mcs-quickstart:
+    build:
+      context: ../../      # repo root
+      dockerfile: docker/quickstart/Dockerfile
+    image: mcs-quickstart:latest
+    container_name: mcs-quickstart
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
