@@ -88,7 +88,7 @@ The demo service is implemented in [`fastapi_server_mcs_quickstart.py`](fastapi_
 1. Ensure the demo is reachable under a **public domain** (or use the hosted URL above).
 2. Ask the LLM to fetch `/openapi-html` and construct the URL for the Fibonacci tool.
 3. In a second prompt, ask the LLM to visit that URL (e.g. `...?n=8`).
-4. A correct call returns **34**. If the model answers **21**, it hallucinated.
+4. A correct call returns **42**. If the model answers **21**, it hallucinated.
 
 | Model                 | Result | Notes                                                                                              |
 | --------------------- | ------ | -------------------------------------------------------------------------------------------------- |
