@@ -1,3 +1,8 @@
+python-dotenv
+
 pydantic
 uvicorn
 fastapi
+
+requests
+litellm
