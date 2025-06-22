@@ -54,36 +54,52 @@ Point your LLM (e.g. ChatGPT with Browser) to `http://localhost:8000/openapi.jso
 
 ---
 
-## Proof of Concept – test MCS in 2 minutes
+## Proof of Concept – try MCS in 2 minutes
 
-You can try MCS with *any* LLM that has web access by serving a tiny FastAPI demo contained in this repo.
+You can verify the MCS pattern with *any* LLM that has web access by spinning up the tiny FastAPI demo included in this repo.
 
 ```bash
 # clone on a VPS / cloud VM with a public DNS or IP
 $ git clone <repo-url>
 $ cd modelcontextstandard
 $ docker compose -f docker/quickstart/docker-compose.yml up -d  # exposes :8000 on your public host
-# optional: use an edge tunnel such as ngrok/cloudflared if you don't have a fixed IP
+# optional: use a tunnel such as ngrok or cloudflared if you do not have a static IP
 ```
 
-> 🛠️ Tip: Tools like [Coolify](https://coolify.io) or Render make deployment of Dockerized apps very straightforward.
+> 🛠️ Tip: Platforms like **[Coolify](https://coolify.io)** or **Render** make one‑click deployment of Dockerised apps very easy.
 
-Point your LLM to `https://your-domain.example:8000/openapi-html` and follow the steps below.
+No server handy? A public demo is **temporarily** available at:
 
-1. **Start the demo server** (already running if you executed `docker compose -f .\docker\quickstart\docker-compose.yml up -d`). 
-It exposes two endpoints:
+```
+https://mcs-quickstart.coolify.alsdienst.de
+```
 
-   * `/openapi-html` – returns the OpenAPI spec as HTML (ChatGPT‑browser compatible)
-   * `/tools/fibonacci` – returns the Fibonacci number for `n`, doubled to verify the model calls the live endpoint
-2. **Paste** `http://localhost:8000/openapi-html` into your LLM chat and ask the model: "Call the Fibonacci tool for n = 8".
-3. The model should fetch the spec, generate the structured function call and return **34** (the doubled value of Fibonacci‑8). 
-4. If it returns **21**, you know it hallucinated instead of calling the API.
+(as long as the endpoint is up).
 
-> ✨ This works with ChatGPT (browser plugin), Claude with web‑access and any agent framework that can read an OpenAPI spec.
+The demo service is implemented in [`fastapi_server_mcs_quickstart.py`](fastapi_server_mcs_quickstart.py) and exposes two endpoints:
 
-POST requests are not required for the demo; simple GETs already prove the pattern. Extending the driver to accept POST+JSON is straightforward and left as an exercise.
+| Path                  | Purpose                                            |
+| --------------------- | -------------------------------------------------- |
+| `/openapi-html`       | serves the OpenAPI spec as HTML (LLM‑readable)     |
+| `/tools/fibonacci?n=` | returns *2 × Fibonacci(n)* to detect hallucination |
 
----
+### How to test with an LLM
+
+1. Ensure the demo is reachable under a **public domain** (or use the hosted URL above).
+2. Ask the LLM to fetch `/openapi-html` and construct the URL for the Fibonacci tool.
+3. In a second prompt, ask the LLM to visit that URL (e.g. `...?n=8`).
+4. A correct call returns **34**. If the model answers **21**, it hallucinated.
+
+| Model                 | Result | Notes                                                                                              |
+| --------------------- | ------ | -------------------------------------------------------------------------------------------------- |
+| ChatGPT (Browser)     | ✅      | Requires two prompts → [sample](https://chat.openai.com/share/68582042-280c-8009-8e18-d44cb72a4a2) |
+| Claude 3 (web access) | ✅      | Needs two‑step flow → [sample](https://claude.ai/share/57128a2d-22f8-440f-a09d-41018459d94f)       |
+| Gemini                | ❌      | Refuses second request                                                                             |
+| Grok                  | ❌      | Mis‑parses OpenAPI and builds wrong URL                                                            |
+| DeepSeek              | ❌      | Hallucinates, cannot target URL                                                                    |
+
+> 🔍 POST requests are *not* required for this smoke test. Simple GETs confirm that the pattern works. Extending the driver to support POST + JSON is straightforward.
+
 
 ---
 
