@@ -4,8 +4,8 @@ import logging
 from typing import Dict, List
 from dotenv import load_dotenv
 
-from drivers import MCSDriver
-from drivers.http_rest import HTTPRESTDriver
+from mcs.drivers import MCSDriver
+from mcs.drivers.http_rest import HTTPRESTDriver
 
 from litellm import completion
 

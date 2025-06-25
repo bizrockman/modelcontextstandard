@@ -76,7 +76,7 @@ https://mcs-quickstart.coolify.alsdienst.de
 
 (as long as the endpoint is up).
 
-The demo service is implemented in [`fastapi_server_mcs_quickstart.py`](fastapi_server_mcs_quickstart.py) and exposes two endpoints:
+The demo service is implemented in [`fastapi_server_mcs_quickstart.py`](mcs/examples/fastapi_server_mcs_quickstart.py) and exposes two endpoints:
 
 | Path                  | Purpose                                            |
 | --------------------- | -------------------------------------------------- |
