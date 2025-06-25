@@ -1,4 +1,4 @@
 from .drivers.mcs_driver_interface import MCSDriver, DriverMeta
-from .drivers.http_rest import HTTPRESTDriver
+from .drivers.rest_http import RestHttpDriver
 
-__all__ = ["MCSDriver", "DriverMeta", "HTTPRESTDriver"]
+__all__ = ["MCSDriver", "DriverMeta", "RestHttpDriver"]

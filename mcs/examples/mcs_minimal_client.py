@@ -5,7 +5,7 @@ from typing import Dict, List
 from dotenv import load_dotenv
 
 from mcs.drivers import MCSDriver
-from mcs.drivers.http_rest import HTTPRESTDriver
+from mcs.drivers.rest_http import RestHttpDriver
 
 from litellm import completion
 
@@ -68,12 +68,13 @@ class ChatSession:
             print(f"An error occurred: {e}")
             # Handle the exception as needed, e.g., logging or retrying
 
+
 async def main() -> None:
     load_dotenv()
 
     # Optional Autostart and getting the URLs
     function_spec_urls = ['https://mcs-quickstart.coolify.alsdienst.de/openapi.json']
-    http_driver = HTTPRESTDriver(function_spec_urls, reduced_spec=True)
+    http_driver = RestHttpDriver(function_spec_urls, reduced_spec=True)
 
     chat_session = ChatSession(http_driver)
     await chat_session.start()
