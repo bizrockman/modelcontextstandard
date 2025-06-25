@@ -10,4 +10,4 @@ COPY mcs/examples/fastapi_server_mcs_quickstart.py .
 COPY mcs/examples/fastapi_rest_quickstart.py .
 
 # default port (wird ggf. vom Service überschrieben)
-EXPOSE 8000
+# EXPOSE 8000
