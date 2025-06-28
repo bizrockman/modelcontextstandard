@@ -30,6 +30,7 @@ class ChatSession:
 
     async def start(self) -> None:
         try:
+            # TODO interating over multiple drivers
             system_message = self.mcs_driver.get_driver_system_message()
 
             logging.info(f"\nSystem message:\n{system_message}\n")
@@ -47,6 +48,7 @@ class ChatSession:
                     llm_response = await self._extract_llm_response(messages=messages)
                     logging.info("\nAssistant: %s", llm_response)
 
+                    # TODO remove the naming collision with tool names like MCP is happening
                     result = self.mcs_driver.process_llm_response(llm_response)
 
                     if result != llm_response:
@@ -76,6 +78,7 @@ async def main() -> None:
     function_spec_urls = ['https://mcs-quickstart.coolify.alsdienst.de/openapi.json']
     http_driver = RestHttpDriver(function_spec_urls, reduced_spec=True)
 
+    # TODO Optional prepare multiple drivers and give them here
     chat_session = ChatSession(http_driver)
     await chat_session.start()
 
