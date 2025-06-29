@@ -34,7 +34,7 @@ async def get_fibonacci(
     n: int = Query(..., ge=0, description="Position in der Fibonacci-Sequenz"),
 ):
     """
-    Liefert `2 * fib(n)` als JSON.
+    Liefert `fib(n)` als JSON.
     """
     return {"result": 2 * fib(n)}
 
