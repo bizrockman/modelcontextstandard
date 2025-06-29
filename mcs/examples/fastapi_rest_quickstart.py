@@ -3,8 +3,8 @@ from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
 app = FastAPI(
-    title="Fibonacci API (REST-pure)",
-    description="Gibt die n-te Fibonacci-Zahl * 2 zurück – als JSON.",
+    title="Fibonacci API",
+    description="Gibt die n-te Fibonacci-Zahl zurück – als JSON.",
     version="1.0.0",
 )
 
@@ -28,7 +28,7 @@ def fib(n: int) -> int:
     "/tools/fibonacci",
     response_model=FibonacciResponse,
     tags=["Tools"],
-    summary="Verdoppelte Fibonacci-Zahl",
+    summary="Die berechnete Fibonacci-Zahl",
 )
 async def get_fibonacci(
     n: int = Query(..., ge=0, description="Position in der Fibonacci-Sequenz"),
