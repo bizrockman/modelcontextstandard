@@ -37,10 +37,10 @@ class DriverMeta:
             Format of the machine-readable function description understood
             by this driver, e.g. ``"OpenAPI"``, ``"JSON-Schema"``,
             ``"WSDL"``, or ``"Custom"``.
-        supported_models :
+        target_llms :
             Tuple of model identifiers that the driver’s prompt template is
-            explicitly tuned for.  Use a wildcard like ``"*"``
-            to indicate a generic prompt that should work for *any* LLM.
+            explicitly tuned for. Use a wildcard like ``"*"``
+            to indicate a generic prompt that should work for *any* LLM, default behavior.
 
         Example
         -------
@@ -48,13 +48,13 @@ class DriverMeta:
         ...     protocol="REST",
         ...     transport="HTTP",
         ...     spec_format="OpenAPI",
-        ...     supported_models=("gpt-4o", "claude-3")
+        ...     target_llms=("*", "claude-3")
         ... )
         """
     protocol: str
     transport: str
     spec_format: str
-    supported_models: Tuple[str, ...] | Tuple[str]  # ("gpt-4o",) or ("*-gpt-*",)
+    target_llms: Tuple[str, ...] | Tuple[str]  # ("gpt-4o",) or ("*-gpt-*",)
 
 
 class MCSDriver(ABC):

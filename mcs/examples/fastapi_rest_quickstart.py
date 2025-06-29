@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 app = FastAPI(
     title="Fibonacci API",
-    description="Gibt die n-te Fibonacci-Zahl zurück – als JSON.",
+    description="Gibt die n-te Fibonacci-Zahl",
     version="1.0.0",
 )
 

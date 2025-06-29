@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """
 HTTP-based reference driver for the Model Context Standard (MCS).
 
@@ -11,6 +9,7 @@ HTTP-based reference driver for the Model Context Standard (MCS).
   - custom system-prompt template
 
 """
+from __future__ import annotations
 
 import base64
 import json
@@ -22,9 +21,6 @@ from urllib.parse import urljoin, urlparse
 
 import requests
 
-# ──────────────────────────────────────────────────────────────
-#  MCS base classes (adapt import path to your project layout)
-# ──────────────────────────────────────────────────────────────
 from mcs.drivers import MCSDriver, DriverMeta  # noqa: F401
 
 
@@ -32,23 +28,23 @@ from mcs.drivers import MCSDriver, DriverMeta  # noqa: F401
 #                               Metadata                                      #
 # --------------------------------------------------------------------------- #
 @dataclass(frozen=True)
-class _HttpRestMeta(DriverMeta):
+class _RestHttpMeta(DriverMeta):
     """Static metadata so an orchestrator can pick this driver."""
     protocol: str = "REST"
     transport: str = "HTTP"
     spec_format: str = "OpenAPI"
-    supported_models: tuple[str, ...] = ("*",)  # generic prompt works everywhere
+    target_llms: tuple[str, ...] = ("*",)  # generic prompt works everywhere
 
 
 # --------------------------------------------------------------------------- #
 #                               Driver                                        #
 # --------------------------------------------------------------------------- #
-class HTTPRESTDriver(MCSDriver):
+class RestHttpDriver(MCSDriver):
     """Reference driver: REST over HTTP with OpenAPI discovery."""
 
-    meta: DriverMeta = _HttpRestMeta()
+    meta: DriverMeta = _RestHttpMeta()
 
-    # ----------------------------- init ----------------------------------- #
+    # ----------------------------- Init ----------------------------------- #
     def __init__(
         self,
         urls: list[str],
@@ -89,7 +85,7 @@ class HTTPRESTDriver(MCSDriver):
             token = base64.b64encode(f"{basic_user}:{basic_password}".encode()).decode()
             self.default_headers.setdefault("Authorization", f"Basic {token}")
 
-    # --------------------------- helpers ---------------------------------- #
+    # --------------------------- Helpers ---------------------------------- #
     def _do_request(
         self,
         method: str,
@@ -145,7 +141,7 @@ class HTTPRESTDriver(MCSDriver):
             logging.error(f"Error extracting JSON: {e}")
             return None
 
-    # --------------------------- contract --------------------------------- #
+    # --------------------------- Interface Implementation --------------------------------- #
     def get_function_description(self, model_name: str | None = None) -> str:
         """Return OpenAPI (or custom) spec. Custom override wins."""
         if self._custom_tool_description is not None:

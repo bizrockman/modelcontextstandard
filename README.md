@@ -92,7 +92,7 @@ The demo service is implemented in [`fastapi_server_mcs_quickstart.py`](mcs/exam
 
 | Model                 | Result | Notes                                                                                              |
 | --------------------- | ------ | -------------------------------------------------------------------------------------------------- |
-| ChatGPT (Browser)     | ✅      | Requires two prompts → [sample](https://chat.openai.com/share/68582042-280c-8009-8e18-d44cb72a4a2) |
+| ChatGPT (Browser)     | ✅      | Requires two prompts → [sample](https://chatgpt.com/share/68582042-280c-8009-8e18-d44cb72a4a28) |
 | Claude 3 (web access) | ✅      | Needs two‑step flow → [sample](https://claude.ai/share/57128a2d-22f8-440f-a09d-41018459d94f)       |
 | Gemini                | ❌      | Refuses second request                                                                             |
 | Grok                  | ❌      | Mis‑parses OpenAPI and builds wrong URL                                                            |
